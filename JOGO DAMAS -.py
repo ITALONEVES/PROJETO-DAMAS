@@ -135,8 +135,8 @@ def mover_dama_AZUL(destino_linha, destino_coluna, inicio_linha, inicio_coluna):
       global SOMA_COLUNA
       global CONT_OCUPADAS
       if JOGADAS % 2 != 0:
-         if destino_coluna > inicio_coluna :
-            for i in range(1,(destino_linha-inicio_linha)+1):   #MOVIMENTO PARA A DIREITA
+         if destino_coluna > inicio_coluna and destino_linha > inicio_linha:
+            for i in range(1,(destino_linha-inicio_linha)+1):   #MOVIMENTO PARA A DIREITA E PARA BAIXO
                 if GUAR_VAR == 0:
                     GUAR_VAR+=1
                     SOMA_LINHA = inicio_linha+1
@@ -163,8 +163,8 @@ def mover_dama_AZUL(destino_linha, destino_coluna, inicio_linha, inicio_coluna):
                     CONT_VAZIAS = 0
                     print("VOCÊ MOVIMENTOU A DAMA AZUL DE FORMA ERRADA, JOGUE NOVAMENTE!")
                     break
-         else:
-             for i in range(1,(destino_linha-inicio_linha)+1):   #MOVIMENTO PARA A ESQUERDA
+         elif destino_linha > inicio_linha and  inicio_coluna > destino_coluna:
+             for i in range(1,(destino_linha-inicio_linha)+1):   #MOVIMENTO PARA A ESQUERDA E PARA BAIXO
                 if GUAR_VAR == 0:
                     GUAR_VAR+=1
                     SOMA_LINHA= inicio_linha+1
@@ -172,7 +172,7 @@ def mover_dama_AZUL(destino_linha, destino_coluna, inicio_linha, inicio_coluna):
                 else:
                     SOMA_LINHA+=1
                     SOMA_COLUNA-=1
-                if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO:
+                if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO and destino_linha - inicio_linha == inicio_coluna - destino_coluna:
                     CONT_VAZIAS+=1
                     if CONT_VAZIAS == (destino_linha-inicio_linha):
                         tabuleiro[inicio_linha][inicio_coluna] = VAZIO
@@ -185,10 +185,50 @@ def mover_dama_AZUL(destino_linha, destino_coluna, inicio_linha, inicio_coluna):
                     CONT_VAZIAS = 0
                     print("VOCÊ MOVIMENTOU A DAMA AZUL DE FORMA ERRADA, JOGUE NOVAMENTE!")
                     break
+         elif inicio_linha > destino_linha and destino_coluna > inicio_coluna:
+             for i in range(1,(inicio_linha-destino_linha)+1):   #MOVIMENTO PARA A DIREITA E PARA CIMA
+                if GUAR_VAR == 0:
+                    GUAR_VAR+=1
+                    SOMA_LINHA = inicio_linha-1
+                    SOMA_COLUNA =inicio_coluna+1
+                else:
+                    SOMA_LINHA-=1
+                    SOMA_COLUNA+=1
+                if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO and inicio_linha - destino_linha == destino_coluna - inicio_coluna:
+                    CONT_VAZIAS+=1
+                    if CONT_VAZIAS == (inicio_linha-destino_linha):
+                        tabuleiro[inicio_linha][inicio_coluna] = VAZIO
+                        tabuleiro[destino_linha][destino_coluna] = DAMA_AZUL
+                        GUAR_VAR = 0
+                        CONT_VAZIAS = 0
+                else:
+                    JOGADAS-=1
+                    GUAR_VAR = 0
+                    CONT_VAZIAS = 0
+                    print("VOCÊ MOVIMENTOU A DAMA AZUL DE FORMA ERRADA, JOGUE NOVAMENTE!")
+         elif inicio_linha > destino_linha and inicio_coluna > destino_coluna:
+             for i in range(1,(inicio_linha-destino_linha)+1):   #MOVIMENTO PARA A ESQUERDA E PARA CIMA
+                if GUAR_VAR == 0:
+                    GUAR_VAR+=1
+                    SOMA_LINHA= inicio_linha-1
+                    SOMA_COLUNA =inicio_coluna-1
+                else:
+                    SOMA_LINHA-=1
+                    SOMA_COLUNA-=1
+                if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO and inicio_linha-destino_linha and inicio_coluna-destino_coluna:
+                    CONT_VAZIAS+=1
+                    if CONT_VAZIAS == (inicio_linha-destino_linha):
+                        tabuleiro[inicio_linha][inicio_coluna] = VAZIO
+                        tabuleiro[destino_linha][destino_coluna] = DAMA_VERDE
+                        GUAR_VAR = 0
+                        CONT_VAZIAS = 0
+                else:
+                    JOGADAS-=1
+                    GUAR_VAR = 0
+                    CONT_VAZIAS = 0
+                    print("VOCÊ MOVIMENTOU A DAMA AZUL DE FORMA ERRADA, JOGUE NOVAMENTE!")
       else:
           JOGADAS-=1
-          GUAR_VAR = 0
-          CONT_VAZIAS = 0
           print("NÃO É A SUA VEZ DE JOGADOR. A VEZ É DO JOGADOR DAS PEÇAS VERDES")
 
 def mover_dama_VERDE(destino_linha, destino_coluna, inicio_linha, inicio_coluna):
@@ -198,51 +238,101 @@ def mover_dama_VERDE(destino_linha, destino_coluna, inicio_linha, inicio_coluna)
       global SOMA_LINHA
       global SOMA_COLUNA
       if JOGADAS % 2 == 0:
-         if inicio_linha > destino_linha and destino_coluna > inicio_coluna:
-            for i in range(1,(inicio_linha-destino_linha)+1):   #MOVIMENTO PARA A DIREITA E PARA CIMA
-                if GUAR_VAR == 0:
-                    GUAR_VAR+=1
-                    SOMA_LINHA = inicio_linha-1
-                    SOMA_COLUNA =inicio_coluna+1
-                else:
-                    SOMA_LINHA-=1
-                    SOMA_COLUNA+=1
-                if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO:
-                    CONT_VAZIAS+=1
-                    if CONT_VAZIAS == (inicio_linha-destino_linha):
-                        tabuleiro[inicio_linha][inicio_coluna] = VAZIO
-                        tabuleiro[destino_linha][destino_coluna] = DAMA_VERDE
+             if destino_coluna > inicio_coluna and destino_linha > inicio_linha:
+                for i in range(1,(destino_linha-inicio_linha)+1):   #MOVIMENTO PARA A DIREITA E PARA BAIXO
+                    if GUAR_VAR == 0:
+                        GUAR_VAR+=1
+                        SOMA_LINHA = inicio_linha+1
+                        SOMA_COLUNA =inicio_coluna+1
+                    else:
+                        SOMA_LINHA+=1
+                        SOMA_COLUNA+=1
+                    if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO and destino_coluna - inicio_coluna == destino_linha - inicio_linha:
+                        CONT_VAZIAS+=1
+                        if CONT_VAZIAS == (destino_linha-inicio_linha):
+                            tabuleiro[inicio_linha][inicio_coluna] = VAZIO
+                            tabuleiro[destino_linha][destino_coluna] = DAMA_VERDE
+                            GUAR_VAR = 0
+                            CONT_VAZIAS = 0
+                    # elif tabuleiro[SOMA_LINHA][SOMA_COLUNA] == DAMA_VERDE or tabuleiro[SOMA_LINHA][SOMA_COLUNA]== VERDE: #COMER COM DAMA AZUL
+                    #      CONT_OCUPADAS+=1
+                    #      if CONT_OCUPADAS == 1:
+                    #              tabuleiro[inicio_linha][inicio_coluna] = VAZIO
+                    #              tabuleiro[destino_linha-1][destino_coluna-1] = VAZIO
+                    #              tabuleiro[destino_linha][destino_coluna] = DAMA_AZUL
+                    else:
+                        JOGADAS-=1
                         GUAR_VAR = 0
                         CONT_VAZIAS = 0
-                else:
-                    JOGADAS-=1
-                    GUAR_VAR = 0
-                    CONT_VAZIAS = 0
-                    print("VOCÊ MOVIMENTOU A DAMA VERDE DE FORMA ERRADA, JOGUE NOVAMENTE!")
-         else:
-             for i in range(1,(inicio_linha-destino_linha)+1):   #MOVIMENTO PARA A ESQUERDA E PARA CIMA
-                if GUAR_VAR == 0:
-                    GUAR_VAR+=1
-                    SOMA_LINHA= inicio_linha-1
-                    SOMA_COLUNA =inicio_coluna-1
-                else:
-                    SOMA_LINHA-=1
-                    SOMA_COLUNA-=1
-                if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO:
-                    CONT_VAZIAS+=1
-                    if CONT_VAZIAS == (inicio_linha-destino_linha):
-                        tabuleiro[inicio_linha][inicio_coluna] = VAZIO
-                        tabuleiro[destino_linha][destino_coluna] = DAMA_VERDE
+                        print("VOCÊ MOVIMENTOU A DAMA VERDE DE FORMA ERRADA, JOGUE NOVAMENTE!")
+                        break
+             elif destino_linha > inicio_linha and  inicio_coluna > destino_coluna:
+                 for i in range(1,(destino_linha-inicio_linha)+1):   #MOVIMENTO PARA A ESQUERDA E PARA BAIXO
+                    if GUAR_VAR == 0:
+                        GUAR_VAR+=1
+                        SOMA_LINHA= inicio_linha+1
+                        SOMA_COLUNA =inicio_coluna-1
+                    else:
+                        SOMA_LINHA+=1
+                        SOMA_COLUNA-=1
+                    if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO and destino_linha - inicio_linha == inicio_coluna - destino_coluna:
+                        CONT_VAZIAS+=1
+                        if CONT_VAZIAS == (destino_linha-inicio_linha):
+                            tabuleiro[inicio_linha][inicio_coluna] = VAZIO
+                            tabuleiro[destino_linha][destino_coluna] = DAMA_VERDE
+                            GUAR_VAR = 0
+                            CONT_VAZIAS = 0
+                    else:
+                        JOGADAS-=1
                         GUAR_VAR = 0
                         CONT_VAZIAS = 0
-                else:
-                    JOGADAS-=1
-                    GUAR_VAR = 0
-                    CONT_VAZIAS = 0
-                    print("VOCÊ MOVIMENTOU A DAMA VERDE DE FORMA ERRADA, JOGUE NOVAMENTE!")
+                        print("VOCÊ MOVIMENTOU A DAMA VERDE DE FORMA ERRADA, JOGUE NOVAMENTE!")
+                        break
+             elif inicio_linha > destino_linha and destino_coluna > inicio_coluna:
+                 for i in range(1,(inicio_linha-destino_linha)+1):   #MOVIMENTO PARA A DIREITA E PARA CIMA
+                    if GUAR_VAR == 0:
+                        GUAR_VAR+=1
+                        SOMA_LINHA = inicio_linha-1
+                        SOMA_COLUNA =inicio_coluna+1
+                    else:
+                        SOMA_LINHA-=1
+                        SOMA_COLUNA+=1
+                    if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO and inicio_linha - destino_linha == destino_coluna - inicio_coluna:
+                        CONT_VAZIAS+=1
+                        if CONT_VAZIAS == (inicio_linha-destino_linha):
+                            tabuleiro[inicio_linha][inicio_coluna] = VAZIO
+                            tabuleiro[destino_linha][destino_coluna] = DAMA_VERDE
+                            GUAR_VAR = 0
+                            CONT_VAZIAS = 0
+                    else:
+                        JOGADAS-=1
+                        GUAR_VAR = 0
+                        CONT_VAZIAS = 0
+                        print("VOCÊ MOVIMENTOU A DAMA VERDE DE FORMA ERRADA, JOGUE NOVAMENTE!")
+             elif inicio_linha > destino_linha and inicio_coluna > destino_coluna:
+                 for i in range(1,(inicio_linha-destino_linha)+1):   #MOVIMENTO PARA A ESQUERDA E PARA CIMA
+                    if GUAR_VAR == 0:
+                        GUAR_VAR+=1
+                        SOMA_LINHA= inicio_linha-1
+                        SOMA_COLUNA =inicio_coluna-1
+                    else:
+                        SOMA_LINHA-=1
+                        SOMA_COLUNA-=1
+                    if tabuleiro[SOMA_LINHA][SOMA_COLUNA] == VAZIO and inicio_linha-destino_linha and inicio_coluna-destino_coluna:
+                        CONT_VAZIAS+=1
+                        if CONT_VAZIAS == (inicio_linha-destino_linha):
+                            tabuleiro[inicio_linha][inicio_coluna] = VAZIO
+                            tabuleiro[destino_linha][destino_coluna] = DAMA_VERDE
+                            GUAR_VAR = 0
+                            CONT_VAZIAS = 0
+                    else:
+                        JOGADAS-=1
+                        GUAR_VAR = 0
+                        CONT_VAZIAS = 0
+                        print("VOCÊ MOVIMENTOU A DAMA VERDE DE FORMA ERRADA, JOGUE NOVAMENTE!")
       else:
-          JOGADAS-=1
-          print("NÃO É A SUA VEZ DE JOGADOR. A VEZ É DO JOGADOR DAS PEÇAS AZUIS")
+            JOGADAS-=1
+            print("NÃO É A SUA VEZ DE JOGADOR. A VEZ É DO JOGADOR DAS PEÇAS AZUIS")
 
 def comer_com_dama_AZUL(destino_linha, destino_coluna, inicio_linha, inicio_coluna):
     # COMENDO PARA DIREITA E PARA CIMA
@@ -301,8 +391,8 @@ tabuleiro = [['   ', '   1  ', '   2  ', '   3  ', '  4   ', '   5  ', '   6  ',
             ['2  ', VAZIO, AZUL, VAZIO, AZUL, VAZIO, AZUL, VAZIO, AZUL],
             ['3  ', DAMA_AZUL, VAZIO, AZUL, VAZIO, AZUL, VAZIO, DAMA_AZUL, VAZIO],
             ['4  ', VAZIO, VAZIO, VAZIO, VAZIO, VAZIO, VAZIO, VAZIO, VAZIO],
-            ['5  ', VAZIO, VAZIO, VERDE, VAZIO, VAZIO, VAZIO, VAZIO, VAZIO],
-            ['6  ', VAZIO, DAMA_VERDE, VAZIO, VAZIO, VAZIO, DAMA_VERDE, VAZIO, VERDE],
+            ['5  ', VAZIO, VAZIO, VAZIO, VAZIO, VAZIO, VAZIO, VAZIO, VAZIO],
+            ['6  ', VAZIO, DAMA_VERDE, VAZIO, VERDE, VAZIO, DAMA_VERDE, VAZIO, VERDE],
             ['7  ', VERDE, VAZIO, VERDE, VAZIO, VERDE, VAZIO, VERDE, VAZIO],
             ['8  ', VAZIO, VERDE, VAZIO, VERDE, VAZIO, VERDE, VAZIO, VERDE]]
 
